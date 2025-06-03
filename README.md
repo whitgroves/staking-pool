@@ -14,4 +14,6 @@ Even if the pool is permanently retired, the contract will make final calls to `
 
 In effect, this means that **if you transfer tokens directly into the pool, those tokens are *gone***, unless you are the only stakeholder (or on good terms with the rest of them). This is by design to prevent a single party from draining the pool.
 
-Finally, note that once the ERC20 token is designated, it cannot be changed. If the token gets updated and redeployed to a new address, the owner will need to deploy and activate a new pool pointing at the updated token contract, notify users of the change, then deactivate and permanently close the current pool with `StakingPool.retire()`.
+For automated distribution of rewards/dividends, it is recommended to transfer the tokens and call `distribute()` from the application layer, although direct transfers from the token contract (for example, as part of a transaction tax) are possible if that contract allows updates to the address(es) it deposits funds into.
+
+Finally, note that once the ERC20 token is designated, it cannot be changed. If the token gets updated and redeployed to a new address, the owner will need to deploy and activate a new pool pointing at the updated token contract, update the token (or any payment processing contracts or applets) to point at the new pool, notify users of the change, then deactivate and permanently close the current pool with `StakingPool.retire()`.
