@@ -24,7 +24,7 @@ contract StakingPool {
 
     address[] private _stakers;
     mapping(address staker => uint tokens) private _stake;
-    uint8 private _warnings;
+    mapping(address staker => bool everStaked) private _everStaked;
 
     constructor(address _tokenAddress) {
         require(IERC20(_tokenAddress).totalSupply() > 0, "Token must have a supply to stake.");
@@ -37,7 +37,10 @@ contract StakingPool {
         require(active == true, "Staking pool is inactive. Pre-staked funds may still be withdrawn.");
         require(IERC20(tokenAddress).transferFrom(msg.sender, address(this), amount), 
                 "Staking failed. Review sender balance and approvals.");
-        if (_stake[msg.sender] == 0) _stakers.push(msg.sender);
+        if (_everStaked[msg.sender] == false) {
+            _everStaked[msg.sender] = true;
+            _stakers.push(msg.sender);
+        }
         _stake[msg.sender] += amount;
         totalStaked += amount;
         return true;

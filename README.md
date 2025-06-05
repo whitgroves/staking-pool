@@ -2,6 +2,8 @@
 
 A smart contract designed to stake any ERC20 token and distribute deposits of said token according to stake size.
 
+For the updated version, see https://github.com/whitgroves/solidity-contracts/blob/main/StakingPool.sol.
+
 The idea is to pool a specific token where holders can stake their share and the contract owner (or their delegates) can deposit and distribute additional tokens while ensuring that stakes can only be withdrawn by the addresses that staked them.
 
 Stakers deposit their tokens via `StakingPool.stake()`, withdraw them with `StakingPool.unstake()`, and can view their balance with `StakingPool.stakeSize()`. Note that `stake()` requires a spending allowance on the token contract via `ERC20.approve()`.
